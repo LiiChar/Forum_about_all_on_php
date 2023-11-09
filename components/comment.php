@@ -1,0 +1,24 @@
+<article class="comment_wrapper">
+    <div class="comment_info">
+        <img class="comment_user_image" src="../assets/user.png" alt="user_icon">
+        <div>
+            <div>
+                <span class="post_author_name"><?php print_r($userCom["username"])  ?></span>
+                <span class="post_date"><?php print(date_parse($comment["updated_at"])["hour"] . ":" . date_parse($comment["updated_at"])["minute"]) ?></span>
+            </div>
+            <div><?php print ($comment['body']) . '<br>'; ?></div>
+            <div><a href=<?php print("../action/addLikes.php?type=comments&id=" . $comment["id"]) ?>>&#10084 <?php print(getCountLikesByTypePostId($db, $comment["id"], 'comments')) ?></a></div>
+        </div>
+
+    </div>
+    <?php // форма для удаления комментария
+    ?>
+    <div class="comment_delete_message">
+        <form action="../action/deleteComment.php
+        " method="post">
+            <input type="hidden" value='<?php print($post['id']) ?>' require name='post_id'>
+            <input type="hidden" value='<?php print($comment['id']) ?>' require name='comment_id'>
+            <?php $userCom["username"] == $user["username"] ? print('<button class="comment_delete_message_button" type="submit">X</button>') : "" ?>
+        </form>
+    </div>
+</article>
