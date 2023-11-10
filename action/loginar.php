@@ -5,7 +5,7 @@ if (array_key_exists('user', $_SESSION) && $_SESSION['user']) {
 } elseif (!empty($_POST)) {
     if (!empty($_POST['username']) && !empty($_POST['password'])) {
 
-        require('../database/db_connect.php');
+        require_once('../database/db_connect.php');
         // получение пользователя по нику
         $statement = $db->prepare('SELECT * FROM users WHERE `username` = :username');
         $statement->bindParam(':username', $_POST['username']);

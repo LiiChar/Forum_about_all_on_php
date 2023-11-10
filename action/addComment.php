@@ -6,7 +6,7 @@ if (empty($_SESSION['user']['firstname'])) {
 } else {
     if (!empty($_POST)) {
         if (!empty($_POST['post_id']) && !empty($_POST['body'])) {
-            require('../database/db_connect.php');
+            require_once('../database/db_connect.php');
             // получение идентфикатора по имени пользователя
             $user = getUserByUsername($db, $_SESSION['user']['username']);
 

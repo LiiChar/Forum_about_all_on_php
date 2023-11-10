@@ -10,7 +10,7 @@
 
 <body>
     <?php
-    require("../components/header.php");
+    require_once("../components/header.php");
 
     ?>
 
@@ -23,7 +23,7 @@
         }
         $post = getPosts($db, $search);
         //проверка на получение постов
-        require("../components/post_list.php");
+        require_once("../components/post_list.php");
         ?>
         </div>
     </main>

@@ -4,7 +4,7 @@
         //получение автора комментария
         $userCom = getUserById($db, $comment['user_id']);
         // визуализация комментария
-        require("../components/comment.php");
+        require_once("../components/comment.php");
     }
     ?>
 </section>

@@ -4,7 +4,7 @@ session_start();
 
 if ($_SESSION['user']) {
     if (!empty($_POST)) {
-        require('../db_connect.php');
+        require_once('../db_connect.php');
         // получение пользовтеля по никнейму                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         $statements = $db->prepare('SELECT `id`, `username`, `lastname`, `firstname`, `bio`, `password` FROM users WHERE username = ?');
         $statements->bindParam('s', $_SESSION['user']['username']);

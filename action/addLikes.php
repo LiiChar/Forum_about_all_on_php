@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['user'])) {
     if (!empty($_GET)) {
         if (!empty($_GET['type']) && !empty($_GET['id'])) {
-            require('../database/db_connect.php');
+            require_once('../database/db_connect.php');
             // получение аундефикатора по имени пользователя
             $user = getUserByUsername($db, $_SESSION['user']['firstname']);
             // получения лайка поставленного пользователем

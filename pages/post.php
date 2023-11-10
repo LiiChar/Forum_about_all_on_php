@@ -2,7 +2,7 @@
 <html lang="en">
 <?php
 session_start();
-require("../database/db_connect.php");
+require_once("../database/db_connect.php");
 $post;
 if (!empty($_GET) && $_GET['post_id']) {
     $post = getPostById($db, $_GET['post_id']);
@@ -32,7 +32,7 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
     $user = getUserByUsername($db, $_SESSION['user']['username']);
     $comments = getCommentsByPostId($db, $post["id"], $order);
 
-    require("../components/header.php");
+    require_once("../components/header.php");
     ?>
     <div style="padding: 10px 20vw 10px 20vw; height: fit-content;" class="post_wrapper">
         <div class="icon_user">
@@ -84,7 +84,7 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
 
     </div>
     <?php
-    require("../components/comments_list.php");
+    require_once("../components/comments_list.php");
     ?>
 </body>
 

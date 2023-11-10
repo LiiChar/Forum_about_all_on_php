@@ -6,7 +6,7 @@ if (empty($_SESSION['user']['firstname'])) {
     //добавление поста в бд 
     if (!empty($_POST)) {
         if (!empty($_POST['heading']) && !empty($_POST['body'])) {
-            require('../database/db_connect.php');
+            require_once('../database/db_connect.php');
             $user = getUserByUsername($db, $_SESSION['user']['username']);
             var_dump($user, $_SESSION['user']['username']);
 

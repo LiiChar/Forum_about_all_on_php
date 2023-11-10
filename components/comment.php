@@ -16,8 +16,8 @@
     <div class="comment_delete_message">
         <form action="../action/deleteComment.php
         " method="post">
-            <input type="hidden" value='<?php print($post['id']) ?>' require name='post_id'>
-            <input type="hidden" value='<?php print($comment['id']) ?>' require name='comment_id'>
+            <input type="hidden" value='<?php print($post['id']) ?>' require_once name='post_id'>
+            <input type="hidden" value='<?php print($comment['id']) ?>' require_once name='comment_id'>
             <?php $userCom["username"] == $user["username"] ? print('<button class="comment_delete_message_button" type="submit">X</button>') : "" ?>
         </form>
     </div>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("../database/db_connect.php");
+require_once("../database/db_connect.php");
 $user = getUserByUsername($db, $_SESSION['user']['username']);
 ?>
 
@@ -15,7 +15,7 @@ $user = getUserByUsername($db, $_SESSION['user']['username']);
 </head>
 
 <body>
-    <?php require("../components/header.php") ?>
+    <?php require_once("../components/header.php") ?>
     <section class="profile_wrapper">
         <div class="profile">
             <div class="profile_info">

@@ -11,7 +11,7 @@
         //получение автора поста
         $user = getUserById($db, $post["user_id"]);
         // визуализация поста
-        require("../components/post.php");
+        require_once("../components/post.php");
     }
     ?>
 </section>
