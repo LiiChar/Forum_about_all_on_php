@@ -4,14 +4,13 @@
     </div>
 
     <?php
-    foreach ($post as $key => $post) {
+    foreach ($posts as $key => $post) {
         // запрос на полученте комментариев по индетификатору поста 
         $comment = getCommentsByPostId($db, $post["id"]);
-
         //получение автора поста
         $user = getUserById($db, $post["user_id"]);
-        // визуализация поста
-        require_once("../components/post.php");
+        // визуализация поста   
+        require("../components/post.php");
     }
     ?>
 </section>

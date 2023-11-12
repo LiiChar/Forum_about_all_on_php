@@ -3,11 +3,14 @@
 <?php
 session_start();
 require_once("../database/db_connect.php");
+if (empty($_SESSION['user']['username']) || getUserByUsername($db, $_SESSION['user']['username']) == false) {
+    header('Location: ../pages/login.php');
+}
 $post;
 if (!empty($_GET) && $_GET['post_id']) {
     $post = getPostById($db, $_GET['post_id']);
 }
-$order = null;
+$order = "ORDER BY updated_at DESC";
 if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
     switch ($_GET['order']) {
         case "old":
@@ -29,7 +32,7 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
 
 <body>
     <?php
-    $user = getUserByUsername($db, $_SESSION['user']['username']);
+    $user = getUserById($db, $post["user_id"]);
     $comments = getCommentsByPostId($db, $post["id"], $order);
 
     require_once("../components/header.php");
@@ -48,11 +51,11 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
             </div>
             <a href="../pages/post.php?post_id=<?php print($post["id"]) ?>" class="post_heading"><?php print_r($post["heading"] . '<br>') ?></a>
             <div style=" height: fit-content;" class="post_body"><?php print_r($post["body"] . '<br>') ?></div>
-            <div>
+            <!-- <div>
                 <span>
                     <a class="post_like" style="<?php getLikeByTypePostId($db, $_SESSION['user']["username"], $post["id"], 'posts') ? print("color: red") : print("inherit") ?>" href=<?php print("../action/addLikes.php?type=posts&id=" . $post["id"]) ?>>&#10084 </a>
-                    <?php print(getCountLikesByTypePostId($db, $post["id"], 'posts')) ?></span>
-            </div>
+            <?php print(getCountLikesByTypePostId($db, $post["id"], 'posts')) ?></span>
+            </div> -->
         </div>
 
     </div>
@@ -84,7 +87,7 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
 
     </div>
     <?php
-    require_once("../components/comments_list.php");
+    require("../components/comments_list.php");
     ?>
 </body>
 

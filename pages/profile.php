@@ -1,7 +1,16 @@
 <?php
 session_start();
 require_once("../database/db_connect.php");
+if (empty($_SESSION['user']['username']) || getUserByUsername($db, $_SESSION['user']['username']) == false) {
+    header('Location: ../pages/login.php');
+}
 $user = getUserByUsername($db, $_SESSION['user']['username']);
+if (array_key_exists("username", $_GET) && $_GET['username']) {
+    $user = getUserByUsername($db, $_GET['username']);
+} else {
+    $user = getUserByUsername($db, $_SESSION['user']['username']);
+}
+$is_owner = $user['username'] == $_SESSION['user']['username'];
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +37,11 @@ $user = getUserByUsername($db, $_SESSION['user']['username']);
             </div>
             <div class="profile_action">
                 <form class="profile_action_exit" action="../action/exit.php">
-                    <button>Выйти из аккаунта</button>
+                    <?php $is_owner ? print('<button  >Выйти из аккаунта</button>') : "" ?>
                 </form>
                 <form class="profile_action_delete" action="../action/deleteUser.php" method="post">
-                    <input type="hidden" value="<?php print($user['id']) ?>" name="user_id" id="">
-                    <button>Удалить аккаунт</button>
+                    <input type="hidden" name="user_id" id="" value="<?php print($user["id"]) ?>" />
+                    <?php $is_owner ? print('<button>Удалить аккаунт</button>') : "" ?>
                 </form>
             </div>
         </div>

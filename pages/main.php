@@ -21,8 +21,7 @@
         if (array_key_exists("search", $_GET)) {
             $search = $_GET["search"];
         }
-        $post = getPosts($db, $search);
-        //проверка на получение постов
+        $posts = getPosts($db, $search);
         require_once("../components/post_list.php");
         ?>
         </div>

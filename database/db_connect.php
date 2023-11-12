@@ -16,8 +16,8 @@ function create_databases(): SQLite3
         lastname TEXT NOT NULL,
         password TEXT NOT NULL,
         bio TEXT, 
-        created_at DEFAULT current_timestamp NOT NULL, 
-        updated_at DEFAULT current_timestamp NOT NULL
+        created_at DEFAULT (datetime(now,localtime)) NOT NULL, 
+        updated_at DEFAULT (datetime(now,localtime)) NOT NULL
         );');
 
     $db->exec('CREATE TABLE IF NOT EXISTS posts(
@@ -25,8 +25,8 @@ function create_databases(): SQLite3
         heading     TEXT UNIQUE NOT NULL,
         body        TEXT NOT NULL,
         user_id     INTEGER NOT NULL,
-        created_at  DEFAULT current_timestamp NOT NULL,
-        updated_at  DEFAULT current_timestamp NOT NULL,
+        created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
+        updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,
         CONSTRAINT fk_user_posts
             FOREIGN KEY (user_id) 
                 REFERENCES users (id) 
@@ -38,8 +38,8 @@ function create_databases(): SQLite3
         body        TEXT NOT NULL,
         user_id     INTEGER NOT NULL,
         post_id     INTEGER NOT NULL,
-        created_at  DEFAULT current_timestamp NOT NULL,
-        updated_at  DEFAULT current_timestamp NOT NULL,
+        created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
+        updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,
         CONSTRAINT fk_user_comments
             FOREIGN KEY (user_id) 
                 REFERENCES users (id) 
@@ -55,8 +55,8 @@ function create_databases(): SQLite3
         likeable_type   TEXT NOT NULL,
         user_id     INTEGER NOT NULL,
         likable_id  INTEGER NOT NULL,
-        created_at  DEFAULT current_timestamp NOT NULL,
-        updated_at  DEFAULT current_timestamp NOT NULL,
+        created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
+        updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,
         CONSTRAINT fk_user_likes
             FOREIGN KEY (user_id) 
                 REFERENCES users (id) 
