@@ -11,9 +11,10 @@
 <body>
     <div class="wrapper_addPost">
 
-        <form class="add_post" action="../action/addPost.php" method="post">
+        <form class="add_post" action="../action/addPost.php" method="post" enctype="multipart/form-data">
             <?php //форма для добавления поста 
             ?>
+            <input type="file" name="userfile">
             <label for="heading">Введите заголовок</label>
             <input id="heading" type="text" name="heading">
             <label for="body">Введите текст</label>

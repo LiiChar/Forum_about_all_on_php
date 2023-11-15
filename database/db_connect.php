@@ -24,6 +24,8 @@ function create_databases(): SQLite3
         id          INTEGER PRIMARY KEY NOT NULL,
         heading     TEXT UNIQUE NOT NULL,
         body        TEXT NOT NULL,
+        image       TEXT NULL,
+        type_img    TEXT NULL,
         user_id     INTEGER NOT NULL,
         created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
         updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,

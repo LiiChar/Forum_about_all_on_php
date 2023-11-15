@@ -2,7 +2,14 @@
 session_start();
 if (empty($_SESSION['user']['firstname'])) {
     header('Location: ../forum/index.php');
-} else
+} else {
+    $file_path = null;
+    if (array_key_exists("userfile", $_FILES) && $_FILES['userfile']) {
+        $uploaddir = '../uploads/';
+        $$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+
+        move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
+    }
     //добавление поста в бд 
     if (!empty($_POST)) {
         if (!empty($_POST['heading']) && !empty($_POST['body'])) {
@@ -35,3 +42,4 @@ if (empty($_SESSION['user']['firstname'])) {
         $_SESSION['error'] = 'Форма не пришла';
         header('Location: ../pages/addpost.php');
     }
+}
