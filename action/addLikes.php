@@ -6,7 +6,7 @@ if (isset($_SESSION['user'])) {
         if (!empty($_GET['type']) && !empty($_GET['id'])) {
             require_once('../database/db_connect.php');
             // получение аундефикатора по имени пользователя
-            $user = getUserByUsername($db, $_SESSION['user']['firstname']);
+            $user = getUserByUsername($db, $_SESSION['user']['username']);
             // получения лайка поставленного пользователем
             $like = getLikeByTypePostId($db, $user["id"], $_GET['id'], $_GET['type']);
 

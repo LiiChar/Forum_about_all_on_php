@@ -51,7 +51,7 @@ button {
     border: 1px solid black;
     border-radius: 8px;
     padding: 5px;
-    transition: all 0.5s ease-in;
+    transition: all 300ms ease;
 }
 
 button:hover {
@@ -206,6 +206,11 @@ a:hover {
 }
 
 .icon {
+    /* width: 100%; */
+    height: 100%;
+}
+
+.icon_post_id {
     width: 100%;
     height: 100%;
 }
@@ -236,7 +241,19 @@ a:hover {
 }
 
 .post_info {
-    width: calc(100% - 60px);
+    width: calc(100% - 250px);
+    display: flex;
+    flex-direction: column;
+}
+
+.post_info_id {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.post_info_list {
+    width: calc(100% - 320px);
     display: flex;
     flex-direction: column;
 }
@@ -407,6 +424,7 @@ a:hover {
 }
 
 .profile_info_about_bio {
+    word-break: break-all;
     overflow: auto;
     height: calc(100% - 50px);
 }
@@ -463,4 +481,40 @@ a:hover {
     /* resize: none; */
     /* height: 70px; */
     max-height: 85px;
+}
+
+.staff {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.staff img {
+    width: auto;
+    height: 50vh;
+}
+
+.staff video {
+    width: auto;
+    height: 50vh;
+}
+
+
+.post_list_staff {
+    width: 20%;
+    height: auto;
+    position: relative;
+}
+
+.post_list_staff img {
+    width: auto;
+    height: 100px;
+}
+
+.post_list_staff video {
+    width: auto;
+    height: 100px;
 }

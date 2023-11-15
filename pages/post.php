@@ -19,6 +19,9 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
         case "new":
             $order = "ORDER BY updated_at DESC";
             break;
+        case "popular":
+            $order = "ORDER BY like";
+            break;
     }
 }
 ?>
@@ -38,24 +41,38 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
     require_once("../components/header.php");
     ?>
     <div style="padding: 10px 20vw 10px 20vw; height: fit-content;" class="post_wrapper">
-        <div class="icon_user">
+        <!-- <div class="icon_user">
 
-            <img class="icon" src="../assets/user.png" alt="user icon">
-        </div>
+            <img class="icon_post_id" src="../assets/user.png" alt="user icon">
+        </div> -->
 
-        <div class="post_info">
+        <div class="post_info_id">
 
             <div>
-                <span class="post_author_name"><?php print_r($user["username"])  ?></span>
-                <span class="post_date"><?php print(date_parse($post["updated_at"])["hour"] . ":" . date_parse($post["updated_at"])["minute"]) ?></span>
+                <a href="../pages/profile.php?username=<?php print($user["username"]) ?>" class="post_author_name"><?php print_r($user["username"])  ?></a>
+                <span class="post_date"><?php print(date_parse($post["updated_at"])["hour"] + 5 . ":" . date_parse($post["updated_at"])["minute"]) ?></span>
             </div>
             <a href="../pages/post.php?post_id=<?php print($post["id"]) ?>" class="post_heading"><?php print_r($post["heading"] . '<br>') ?></a>
-            <div style=" height: fit-content;" class="post_body"><?php print_r($post["body"] . '<br>') ?></div>
-            <!-- <div>
+            <div style=" height: fit-content;" class="post_body">
+                <div class='staff'>
+                    <?php
+                    if ($post["type_img"] == "image") {
+                        print("<img class='staff' src='{$post['image']}' alt='post img' />");
+                    } else if ($post["type_img"] == "video") {
+                        print("<video controls class='staff' src='{$post['image']}' autoplay> </video>");
+                    }
+                    ?>
+                </div>
+                <div>
+                    <?php print_r($post["body"]) ?>
+
+                </div>
+            </div>
+            <div>
                 <span>
                     <a class="post_like" style="<?php getLikeByTypePostId($db, $_SESSION['user']["username"], $post["id"], 'posts') ? print("color: red") : print("inherit") ?>" href=<?php print("../action/addLikes.php?type=posts&id=" . $post["id"]) ?>>&#10084 </a>
-            <?php print(getCountLikesByTypePostId($db, $post["id"], 'posts')) ?></span>
-            </div> -->
+                    <?php print(getCountLikesByTypePostId($db, $post["id"], 'posts')) ?></span>
+            </div>
         </div>
 
     </div>
@@ -67,6 +84,7 @@ if (!empty($_GET) && array_key_exists("order", $_GET) && $_GET['order']) {
                     <select onchange="this.form.submit()" name="order">
                         <option <?php array_key_exists("order", $_GET) && $_GET['order'] == "new" ? print("selected") : "" ?> value="new"><button type="submit">новым</button></option>
                         <option <?php array_key_exists("order", $_GET) && $_GET['order'] == "old" ? print("selected") : "" ?> value="old"><button type="submit">старым</button></option>
+                        <option <?php array_key_exists("order", $_GET) && $_GET['order'] == "popular" ? print("selected") : "" ?> value="popular"><button type="submit">популярные</button></option>
                     </select>
                 </form>
             </div>

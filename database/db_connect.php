@@ -16,8 +16,8 @@ function create_databases(): SQLite3
         lastname TEXT NOT NULL,
         password TEXT NOT NULL,
         bio TEXT, 
-        created_at DEFAULT (datetime(now,localtime)) NOT NULL, 
-        updated_at DEFAULT (datetime(now,localtime)) NOT NULL
+        created_at DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+        updated_at DEFAULT CURRENT_TIMESTAMP NOT NULL
         );');
 
     $db->exec('CREATE TABLE IF NOT EXISTS posts(
@@ -27,8 +27,8 @@ function create_databases(): SQLite3
         image       TEXT NULL,
         type_img    TEXT NULL,
         user_id     INTEGER NOT NULL,
-        created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
-        updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,
+        created_at  DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        updated_at  DEFAULT CURRENT_TIMESTAMP NOT NULL,
         CONSTRAINT fk_user_posts
             FOREIGN KEY (user_id) 
                 REFERENCES users (id) 
@@ -40,8 +40,8 @@ function create_databases(): SQLite3
         body        TEXT NOT NULL,
         user_id     INTEGER NOT NULL,
         post_id     INTEGER NOT NULL,
-        created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
-        updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,
+        created_at  DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        updated_at  DEFAULT CURRENT_TIMESTAMP NOT NULL,
         CONSTRAINT fk_user_comments
             FOREIGN KEY (user_id) 
                 REFERENCES users (id) 
@@ -57,8 +57,8 @@ function create_databases(): SQLite3
         likeable_type   TEXT NOT NULL,
         user_id     INTEGER NOT NULL,
         likable_id  INTEGER NOT NULL,
-        created_at  DEFAULT (datetime(now,localtime)) NOT NULL,
-        updated_at  DEFAULT (datetime(now,localtime)) NOT NULL,
+        created_at  DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        updated_at  DEFAULT CURRENT_TIMESTAMP NOT NULL,
         CONSTRAINT fk_user_likes
             FOREIGN KEY (user_id) 
                 REFERENCES users (id) 
@@ -164,17 +164,31 @@ function deleteLikesBtUserId($db, $user_id)
 
 function getCommentsByPostId($db, $post_id, $order = "ORDER BY updated_at DESC")
 {
-    $statements = $db->prepare('SELECT * FROM `comments` WHERE `post_id` = :post_id ' . $order);
-    $statements->bindParam(
-        ':post_id',
-        $post_id
-    );
-    $exec = $statements->execute();
-    $comments = [];
-    while ($row = $exec->fetchArray(SQLITE3_ASSOC)) {
-        array_push($comments, $row);
+    if ($order == "ORDER BY like") {
+        $statements = $db->prepare('SELECT * from comments AS c LEFT JOIN likes AS l on (l.likable_id = c.id) GROUP BY c.id HAVING c.post_id = :post_id ORDER BY count(l.id)');
+        $statements->bindParam(
+            ':post_id',
+            $post_id
+        );
+        $exec = $statements->execute();
+        $comments = [];
+        while ($row = $exec->fetchArray(SQLITE3_ASSOC)) {
+            array_push($comments, $row);
+        }
+        return $comments;
+    } else {
+        $statements = $db->prepare('SELECT * FROM `comments` WHERE `post_id` = :post_id ' . $order);
+        $statements->bindParam(
+            ':post_id',
+            $post_id
+        );
+        $exec = $statements->execute();
+        $comments = [];
+        while ($row = $exec->fetchArray(SQLITE3_ASSOC)) {
+            array_push($comments, $row);
+        }
+        return $comments;
     }
-    return $comments;
 }
 
 function deleteCommentById($db, $id)
